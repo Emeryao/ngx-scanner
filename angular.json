@@ -1,0 +1,144 @@
+{
+    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+    "defaultProject": "honey-scanner",
+    "newProjectRoot": "projects",
+    "projects": {
+        "honey-scanner": {
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-ng-packagr:build",
+                    "options": {
+                        "project": "projects/honey-scanner/ng-package.json",
+                        "tsConfig": "projects/honey-scanner/tsconfig.lib.json"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "exclude": [
+                            "**/node_modules/**"
+                        ],
+                        "tsConfig": [
+                            "projects/honey-scanner/tsconfig.lib.json"
+                        ]
+                    }
+                },
+                "deploy": {
+                    "builder": "@byzan-libs/ngx-deploy-npm:deploy",
+                    "options": {
+                        "access": "public"
+                    }
+                }
+            },
+            "prefix": "lib",
+            "projectType": "library",
+            "root": "projects/honey-scanner",
+            "sourceRoot": "projects/honey-scanner/src"
+        },
+        "honey-scanner-puppet": {
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "configurations": {
+                        "production": {
+                            "aot": true,
+                            "budgets": [
+                                {
+                                    "maximumError": "5mb",
+                                    "maximumWarning": "2mb",
+                                    "type": "initial"
+                                },
+                                {
+                                    "maximumError": "10kb",
+                                    "maximumWarning": "6kb",
+                                    "type": "anyComponentStyle"
+                                }
+                            ],
+                            "buildOptimizer": true,
+                            "extractCss": true,
+                            "extractLicenses": true,
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "namedChunks": false,
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "vendorChunk": false
+                        }
+                    },
+                    "options": {
+                        "aot": false,
+                        "assets": [
+                            "src/favicon.ico",
+                            "src/assets"
+                        ],
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "outputPath": "dist/honey-scanner-puppet",
+                        "polyfills": "src/polyfills.ts",
+                        "scripts": [],
+                        "styles": [
+                            "src/styles.scss"
+                        ],
+                        "tsConfig": "tsconfig.app.json"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "exclude": [
+                            "**/node_modules/**"
+                        ],
+                        "tsConfig": [
+                            "tsconfig.app.json"
+                        ]
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "honey-scanner-puppet:build:production"
+                        }
+                    },
+                    "options": {
+                        "browserTarget": "honey-scanner-puppet:build"
+                    }
+                }
+            },
+            "prefix": "app",
+            "projectType": "application",
+            "root": "",
+            "schematics": {
+                "@schematics/angular:class": {
+                    "skipTests": true
+                },
+                "@schematics/angular:component": {
+                    "skipTests": true,
+                    "style": "scss"
+                },
+                "@schematics/angular:directive": {
+                    "skipTests": true
+                },
+                "@schematics/angular:guard": {
+                    "skipTests": true
+                },
+                "@schematics/angular:module": {
+                    "skipTests": true
+                },
+                "@schematics/angular:pipe": {
+                    "skipTests": true
+                },
+                "@schematics/angular:service": {
+                    "skipTests": true
+                }
+            },
+            "sourceRoot": "src"
+        }
+    },
+    "version": 1
+}

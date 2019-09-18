@@ -1,0 +1,27 @@
+stages:
+  - lint
+  - publish
+
+lint:
+  stage: lint
+  tags:
+    - node
+  script:
+    - node --version
+    - npm --version
+    - npm install --no-progress --loglevel=error
+    - npx ts-node ./tools/CI/npm-outdated "$(npm outdated --json)"
+    - npm run lint
+
+publish:
+  stage: publish
+  only:
+    - dev
+    - master
+  tags:
+    - node
+  script:
+    - node --version
+    - npm --version
+    - npm install --no-progress --loglevel=error
+    - npm run deploy -- --packageVersion $(npx ts-node --compiler-options "{\"module\":\"commonjs\"}" ./tools/CI/package-version.ts "$CI_PIPELINE_ID")
