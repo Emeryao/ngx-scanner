@@ -1,6 +1,12 @@
 # HoneyScanner 🐝  
 a service to get the string from the Honeywell scanner HH450  
 
+## Installation
+
+```sh
+$ npm install @byzan-libs/honey-scanner
+```
+
 ## Usage
 ```typescript
 @Component({
