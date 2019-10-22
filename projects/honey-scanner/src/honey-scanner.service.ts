@@ -4,7 +4,7 @@ import { fromEvent, Observable, Subject, Subscription } from 'rxjs';
 @Injectable()
 export class HoneyScannerService {
 
-    private keyEventSubscription: Subscription;
+    private keyEventSubscription?: Subscription;
 
     private chunk: string = '';
 
@@ -12,7 +12,7 @@ export class HoneyScannerService {
 
     private result: Subject<string> = new Subject<string>();
 
-    public constructor() {
+    public onScan(): Observable<string> {
         this.keyEventSubscription = fromEvent<KeyboardEvent>(document, 'keypress').subscribe({
             next: e => {
                 if (this.lastTimestamp == 0 || e.timeStamp - this.lastTimestamp < 9) {
@@ -30,9 +30,6 @@ export class HoneyScannerService {
                 }
             },
         });
-    }
-
-    public onScan(): Observable<string> {
         return this.result.asObservable();
     }
 
