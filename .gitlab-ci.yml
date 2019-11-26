@@ -24,4 +24,6 @@ publish:
     - node --version
     - npm --version
     - npm install --no-progress --loglevel=error
-    - npm run deploy -- --packageVersion $(npx ts-node --compiler-options "{\"module\":\"commonjs\"}" ./tools/CI/package-version.ts "$CI_PIPELINE_ID")
+    - TAG=latest
+    - if [ $CI_COMMIT_REF_NAME == dev ]; then TAG=dev; fi
+    - npm run deploy -- --tag $TAG --packageVersion $(npx ts-node --compiler-options "{\"module\":\"commonjs\"}" ./tools/CI/package-version.ts "$CI_PIPELINE_ID")
