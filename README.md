@@ -1,5 +1,5 @@
 # HoneyScanner 🐝  
-a service to get the string from the Honeywell scanner `HH450`  
+a service to get the string from a scanner device like Honeywell `HH450`  
 
 ## Installation
 
@@ -23,7 +23,11 @@ export class MainComponent implements OnDestroy {
         // provided in a *tank* module
         private scanner: HoneyScannerService,
     ) {
-        this.scannerSubscription = this.scanner.onScan().subscribe({
+        
+        // adjust the threshold of milliseconds for different sanner devices default is 90
+        let threshold:number = 90;
+
+        this.scannerSubscription = this.scanner.onScan(threshold).subscribe({
             next: e => {
                 // scan result here
                 console.log(e);

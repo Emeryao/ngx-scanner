@@ -13,10 +13,10 @@ export class AppComponent {
     public constructor(
         private scanner: HoneyScannerService,
     ) {
-        this.scanner.onScan().subscribe({
+        this.scanner.onScan(90).subscribe({
             next: e => {
                 // tslint:disable-next-line: no-console
-                console.log(e);
+                console.log('SCAN RESULT: ', e);
             },
         });
     }

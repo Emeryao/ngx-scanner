@@ -12,10 +12,10 @@ export class HoneyScannerService {
 
     private result: Subject<string> = new Subject<string>();
 
-    public onScan(): Observable<string> {
+    public onScan(threshold: number = 90): Observable<string> {
         this.keyEventSubscription = fromEvent<KeyboardEvent>(document, 'keypress').subscribe({
             next: e => {
-                if (this.lastTimestamp == 0 || e.timeStamp - this.lastTimestamp < 9) {
+                if (this.lastTimestamp == 0 || e.timeStamp - this.lastTimestamp < threshold) {
                     if (e.key != 'Enter') {
                         this.chunk += e.key;
                         this.lastTimestamp = e.timeStamp;
@@ -24,7 +24,7 @@ export class HoneyScannerService {
                         this.chunk = '';
                         this.lastTimestamp = 0;
                     }
-                } else if (e.timeStamp - this.lastTimestamp > 9) {
+                } else if (e.timeStamp - this.lastTimestamp > threshold) {
                     this.chunk = e.key;
                     this.lastTimestamp = e.timeStamp;
                 }
